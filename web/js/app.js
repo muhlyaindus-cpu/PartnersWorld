@@ -16,17 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Загружаем данные, если пользователь авторизован
     if (token) {
-        loadUserInfo();
-        // Загружаем запросы, только если мы на странице, где они нужны
-        if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/requests.html') {
-            fetchRequests();
-        }
-    } else {
-        // Если пользователь не авторизован, но находится на главной — показываем приглашение
-        if (currentPath === '/' || currentPath === '/index.html') {
-            showLoginPrompt();
-        }
+    loadUserInfo();
+    if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/requests.html') {
+        fetchRequests();
     }
+    // Скрываем hero-блок для авторизованных
+    const hero = document.querySelector('.hero');
+    if (hero) hero.style.display = 'none';
+} else {
+    if (currentPath === '/' || currentPath === '/index.html') {
+        showLoginPrompt();
+    }
+}
 });
 
 // Функция обновления навигации

@@ -25,7 +25,7 @@ func main() {
 		port = "8080"
 	}
 
-	database := db.InitDB(dbPath)
+	database := db.InitDB()
 	defer database.Close()
 	db.RunMigrations(database)
 

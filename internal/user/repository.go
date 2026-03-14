@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"strings" // добавить, если нет
+	"strings"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -20,8 +20,28 @@ func NewRepository(db *sql.DB) *Repository {
 }
 
 // CreateUser создаёт нового пользователя в базе.
+func (r *Repository) CreateUser(email, password, role, country, companyName, description string) (int64, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return 0, fmt.Errorf("failed to hash password: %w", err)
+	}
 
-// CheckPassword проверяет пароль для указанного email
+	var id int64
+	err = r.db.QueryRow(`
+		INSERT INTO users (email, password_hash, role, country, company_name, description)
+		VALUES ($1, $2, $3, $4, $5, $6)
+		RETURNING id`,
+		email, string(hashedPassword), role, country, companyName, description,
+	).Scan(&id)
+	if err != nil {
+		return 0, fmt.Errorf("failed to insert user: %w", err)
+	}
+
+	log.Printf("User created with ID: %d", id)
+	return id, nil
+}
+
+// CheckPassword проверяет пароль для указанного email.
 func (r *Repository) CheckPassword(email, password string) (bool, *User, error) {
 	user, err := r.GetUserByEmail(email)
 	if err != nil {
@@ -37,43 +57,16 @@ func (r *Repository) CheckPassword(email, password string) (bool, *User, error) 
 	return true, user, nil
 }
 
-// Возвращает ID созданного пользователя или ошибку.
-func (r *Repository) CreateUser(email, password, role, country, companyName, description string) (int64, error) {
-	// Хешируем пароль
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		return 0, fmt.Errorf("failed to hash password: %w", err)
-	}
-
-	// Вставка в БД
-	result, err := r.db.Exec(`
-        INSERT INTO users (email, password_hash, role, country, company_name, description)
-        VALUES (?, ?, ?, ?, ?, ?)`,
-		email, string(hashedPassword), role, country, companyName, description,
-	)
-	if err != nil {
-		return 0, fmt.Errorf("failed to insert user: %w", err)
-	}
-
-	id, err := result.LastInsertId()
-	if err != nil {
-		return 0, fmt.Errorf("failed to get last insert id: %w", err)
-	}
-
-	log.Printf("User created with ID: %d", id)
-	return id, nil
-
-}
-
-// GetUserByEmail возвращает пользователя по email (понадобится позже для логина).
+// GetUserByEmail возвращает пользователя по email.
 func (r *Repository) GetUserByEmail(email string) (*User, error) {
 	var u User
 	err := r.db.QueryRow(`
-        SELECT 
-            id, email, password_hash, role, country, company_name, description, 
-            avatar_url, rating, services, portfolio, hourly_rate, project_rate, contact_info,
-            created_at, updated_at
-        FROM users WHERE email = ?`, email).
+		SELECT
+			id, email, password_hash, role, country, company_name, description,
+			avatar_url, rating, services, portfolio, hourly_rate, project_rate, contact_info,
+			created_at, updated_at
+		FROM users
+		WHERE email = $1`, email).
 		Scan(
 			&u.ID, &u.Email, &u.PasswordHash, &u.Role, &u.Country, &u.CompanyName, &u.Description,
 			&u.AvatarURL, &u.Rating, &u.Services, &u.Portfolio, &u.HourlyRate, &u.ProjectRate, &u.ContactInfo,
@@ -88,14 +81,16 @@ func (r *Repository) GetUserByEmail(email string) (*User, error) {
 	return &u, nil
 }
 
+// GetUserByID возвращает пользователя по ID.
 func (r *Repository) GetUserByID(id int64) (*User, error) {
 	var u User
 	err := r.db.QueryRow(`
-        SELECT 
-            id, email, password_hash, role, country, company_name, description, 
-            avatar_url, rating, services, portfolio, hourly_rate, project_rate, contact_info,
-            created_at, updated_at
-        FROM users WHERE id = ?`, id).
+		SELECT
+			id, email, password_hash, role, country, company_name, description,
+			avatar_url, rating, services, portfolio, hourly_rate, project_rate, contact_info,
+			created_at, updated_at
+		FROM users
+		WHERE id = $1`, id).
 		Scan(
 			&u.ID, &u.Email, &u.PasswordHash, &u.Role, &u.Country, &u.CompanyName, &u.Description,
 			&u.AvatarURL, &u.Rating, &u.Services, &u.Portfolio, &u.HourlyRate, &u.ProjectRate, &u.ContactInfo,
@@ -108,26 +103,25 @@ func (r *Repository) GetUserByID(id int64) (*User, error) {
 		return nil, fmt.Errorf("failed to get user by id: %w", err)
 	}
 	return &u, nil
-
 }
 
 // UpdateUser обновляет поля пользователя (частичное обновление).
-// Принимает ID пользователя и map с именами полей и новыми значениями.
 func (r *Repository) UpdateUser(userID int64, updates map[string]interface{}) error {
 	if len(updates) == 0 {
 		return fmt.Errorf("no fields to update")
 	}
 
-	// Строим SET часть запроса
 	setClauses := make([]string, 0, len(updates))
 	args := make([]interface{}, 0, len(updates)+1)
+	idx := 1
 	for field, value := range updates {
-		setClauses = append(setClauses, fmt.Sprintf("%s = ?", field))
+		setClauses = append(setClauses, fmt.Sprintf("%s = $%d", field, idx))
 		args = append(args, value)
+		idx++
 	}
 	args = append(args, userID)
 
-	query := fmt.Sprintf("UPDATE users SET %s, updated_at = datetime('now') WHERE id = ?", strings.Join(setClauses, ", "))
+	query := fmt.Sprintf("UPDATE users SET %s, updated_at = NOW() WHERE id = $%d", strings.Join(setClauses, ", "), idx)
 
 	_, err := r.db.Exec(query, args...)
 	if err != nil {
