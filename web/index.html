@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partners World — международное сообщество продавцов</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/favicon/site.webmanifest">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+    <div class="header-container">
+        <a href="/" class="logo-block">
+            <img src="/images/logo.png" alt="Partners World" class="logo-img">
+        </a>
+        <nav class="nav-menu">
+            <a href="/requests.html" class="nav-link" id="requestsLink">Запросы</a>
+            <a href="/" class="nav-link">Главная</a>
+            <a href="/about.html" class="nav-link">О проекте</a>
+            <a href="/profile.html" class="nav-link" id="profileLink" style="display: none;">Мой профиль</a>
+            <a href="/login.html" class="nav-link" id="loginLink">Вход</a>
+            <a href="/register.html" class="nav-link btn-register" id="registerLink">Регистрация</a>
+            <span class="user-info" id="userInfo" style="display: none;"></span>
+            <button class="logout-btn" id="logoutBtn" style="display: none;" onclick="logout()">Выйти</button>
+        </nav>
+    </div>
+    </header>
+
+    <main>
+        <!-- Hero-блок -->
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Найди партнёра для выхода на международные рынки</h1>
+                    <p class="hero-subtitle">Partners World — сообщество, где экспортёры и местные партнёры объединяют усилия, знания и опыт, чтобы вместе продавать товары по всему миру.</p>
+                    <div class="hero-buttons">
+                        <a href="/register.html" class="btn btn-primary">Стать экспортёром</a>
+                        <a href="/register.html?role=partner" class="btn btn-secondary">Стать партнёром</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <!-- Здесь можно разместить иллюстрацию, например, глобус или людей -->
+                    🌍
+                </div>
+            </div>
+        </section>
+
+        <!-- Блок "Как это работает" -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">Как это работает</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Зарегистрируйтесь</h3>
+                        <p>Создайте профиль, укажите свою роль (экспортёр или партнёр) и страну.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Создайте запрос или найдите его</h3>
+                        <p>Экспортёры публикуют запросы на поиск партнёра в нужной стране. Партнёры просматривают открытые запросы и откликаются.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Общайтесь и сотрудничайте</h3>
+                        <p>Встроенный чат позволяет обсудить детали, обменяться файлами и договориться об условиях.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Почему выбирают Partners World</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Живое сообщество</h3>
+                        <p>Мы не биржа, а сообщество. Здесь люди помогают друг другу, делятся опытом и строят долгосрочные партнёрства.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Международный охват</h3>
+                        <p>Партнёры из более чем 50 стран готовы помочь с локальными маркетплейсами, законами и продвижением.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Безопасность и доверие</h3>
+                        <p>Рейтинги, отзывы и верификация профилей помогают выбирать надёжных партнёров.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Почему именно Partners World -->
+<section class="why-partners-world">
+    <div class="container">
+        <h2 class="section-title">Почему именно Partners World</h2>
+        <div class="features-grid">
+            <!-- Карточка 1: Юридическая поддержка -->
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <h3>Юридическая и таможенная поддержка</h3>
+                <p>Местные партнёры-эксперты помогут с документами, избежать ошибок и лишних пошлин.</p>
+            </div>
+            <!-- Карточка 2: Надёжная логистика -->
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Надёжная логистика</h3>
+                <p>Проверенные экспедиторы, знающие все тонкости доставки в конкретную страну.</p>
+            </div>
+            <!-- Карточка 3: Возвраты без головной боли -->
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Решение проблем с возвратами</h3>
+                <p>Локальные склады и сервисы для приёмки возвратов — без обратной международной пересылки.</p>
+            </div>
+            <!-- Карточка 4: Локализация и маркетинг -->
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Локализация и маркетинг</h3>
+                <p>Адаптация описаний товаров под местный рынок, а не просто перевод.</p>
+            </div>
+            <!-- Карточка 5: Прозрачность через сообщество -->
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Прозрачность через сообщество</h3>
+                <p>Реальные отзывы и опыт, помогающие избежать скрытых комиссий и недобросовестных посредников.</p>
+            </div>
+            <!-- Карточка 6: Гибкость выбора -->
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Гибкость выбора</h3>
+                <p>Соберите команду поддержки под любую модель продаж (FBS, FBP и др.).</p>
+            </div>
+        </div>
+        <!-- Призыв к действию -->
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="/register.html" class="btn btn-primary btn-large">Присоединиться к сообществу</a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== НОВЫЙ БЛОК: СТРАТЕГИЧЕСКОЕ ПРЕИМУЩЕСТВО ========== -->
+<section class="strategic-advantage">
+    <div class="container">
+        <h2 class="section-title">Стройте будущее международного бизнеса уже сегодня</h2>
+        <div class="advantage-content">
+            <p>
+                Санкции — временны. Рынки неизбежно откроются, и те, кто начал налаживать связи прямо сейчас,
+                окажутся в привилегированном положении. Регистрируясь на Partners World сегодня, вы формируете
+                базу проверенных контактов, которая станет вашим неоспоримым преимуществом, когда конкуренты
+                только начнут выходить на рынок.
+            </p>
+            <div class="cta-block">
+                <a href="/register.html" class="btn btn-primary btn-large">Стать первопроходцем</a>
+                <p class="micro-text">Регистрация бесплатна · Уже <span id="pioneerCount">0</span> первопроходцев присоединились</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  // Функция для обновления счётчика первопроходцев
+  async function updatePioneerCount() {
+    try {
+      const response = await fetch('/api/users/count'); // эндпоинт, который нужно создать на бэкенде
+      if (response.ok) {
+        const data = await response.json();
+        document.getElementById('pioneerCount').textContent = data.count;
+      } else {
+        console.warn('Не удалось загрузить количество пользователей');
+      }
+    } catch (error) {
+      console.error('Ошибка при запросе количества пользователей:', error);
+    }
+  }
+
+  // Вызываем функцию после загрузки страницы
+  document.addEventListener('DOMContentLoaded', updatePioneerCount);
+</script>
+<!-- ========== КОНЕЦ НОВОГО БЛОКА ========== -->
+
+        <!-- Список последних запросов -->
+        <section class="requests-section">
+            <div class="container">
+                <h2 class="section-title">Последние запросы на партнёрство</h2>
+                <div id="requestsList" class="requests-list">
+                    <!-- Динамически заполняется JavaScript -->
+                    <div class="loading">Загрузка запросов...</div>
+                </div>
+                <div class="text-center">
+                    <a href="/requests.html" class="btn btn-outline">Смотреть все запросы</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Призыв к действию -->
+        <section class="cta">
+            <div class="container cta-container">
+                <h2>Готовы начать?</h2>
+                <p>Присоединяйтесь к сообществу и найдите идеального партнёра для вашего бизнеса.</p>
+                <div class="cta-buttons">
+                    <a href="/register.html" class="btn btn-primary btn-large">Зарегистрироваться</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-logo">Partners World</div>
+            <div class="footer-links">
+                <a href="/">Главная</a>
+                <a href="/about.html">О проекте</a>
+                <a href="/privacy.html">Конфиденциальность</a>
+                <a href="/terms.html">Условия</a>
+            </div>
+            <div class="footer-copyright">© 2026 Partners World. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

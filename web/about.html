@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О проекте — Partners World</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/favicon/site.webmanifest">
+</head>
+<body>
+    <!-- Шапка (такая же, как на главной) -->
+    <header class="header">
+    <div class="header-container">
+        <a href="/" class="logo-block">
+            <img src="/images/logo.png" alt="Partners World" class="logo-img">
+        </a>
+        <nav class="nav-menu">
+            <a href="/requests.html" class="nav-link" id="requestsLink">Запросы</a>
+            <a href="/" class="nav-link">Главная</a>
+            <a href="/about.html" class="nav-link">О проекте</a>
+            <a href="/profile.html" class="nav-link" id="profileLink" style="display: none;">Мой профиль</a>
+            <a href="/login.html" class="nav-link" id="loginLink">Вход</a>
+            <a href="/register.html" class="nav-link btn-register" id="registerLink">Регистрация</a>
+            <span class="user-info" id="userInfo" style="display: none;"></span>
+            <button class="logout-btn" id="logoutBtn" style="display: none;" onclick="logout()">Выйти</button>
+        </nav>
+    </div>
+</header>
+
+    <main>
+        <!-- Hero-блок страницы "О проекте" -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>О проекте Partners World</h1>
+                <p>Глобальное сообщество, объединяющее экспортёров и местных экспертов для успешного выхода на международные рынки.</p>
+            </div>
+        </section>
+
+        <!-- Суть платформы -->
+        <section class="about-section">
+            <div class="container">
+                <h2 class="section-title">Наша миссия</h2>
+                <div class="about-content">
+                    <p>Мы создаём пространство, где предприниматели из разных стран могут найти надёжного партнёра для развития своего бизнеса за рубежом. Экспортёры получают доступ к локальным знаниям и услугам, а местные специалисты — возможность монетизировать свой опыт и связи.</p>
+                    <p>Partners World — это не биржа фриланса и не маркетплейс товаров. Это сообщество, в основе которого лежит взаимовыгодное сотрудничество и долгосрочные партнёрства.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кто такие партнёры и какие услуги они предлагают -->
+        <section class="services-section">
+            <div class="container">
+                <h2 class="section-title">Кто такие местные партнёры и чем они могут помочь</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">⚖️</div>
+                        <h3>Юридическая поддержка</h3>
+                        <p>Помощь в регистрации компании, оформлении лицензий, соблюдении местного законодательства и налоговых требований.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📦</div>
+                        <h3>Логистика и доставка</h3>
+                        <p>Организация складирования, упаковки, транспортировки и таможенного оформления товаров.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📈</div>
+                        <h3>Маркетинг и продвижение</h3>
+                        <p>Адаптация товара под локальный рынок, SEO-оптимизация карточек, работа с местными соцсетями и инфлюенсерами.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🛒</div>
+                        <h3>Размещение на маркетплейсах</h3>
+                        <p>Помощь в регистрации и верификации на Amazon, eBay, Mercado Libre, Allegro и других площадках, а также управление листингами.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">💬</div>
+                        <h3>Консультации и перевод</h3>
+                        <p>Услуги переводчиков, помощь в проведении переговоров, анализ конкурентов и потребительского спроса.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🔧</div>
+                        <h3>Практические решения</h3>
+                        <p>Локализация продукта, поиск поставщиков, сертификация, проверка контрагентов — любые задачи, требующие «местного» взгляда.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества платформы -->
+        <section class="advantages-section">
+            <div class="container">
+                <h2 class="section-title">Почему стоит выбрать Partners World</h2>
+                <div class="advantages-list">
+                    <div class="advantage-item">
+                        <strong>🤝 Прямой доступ к экспертам</strong>
+                        <p>Вы общаетесь напрямую с теми, кто знает рынок изнутри. Никаких посредников и скрытых комиссий.</p>
+                    </div>
+                    <div class="advantage-item">
+                        <strong>🌐 Международный охват</strong>
+                        <p>Партнёры из более чем 50 стран готовы помочь с локальными особенностями ведения бизнеса.</p>
+                    </div>
+                    <div class="advantage-item">
+                        <strong>🔒 Доверие и безопасность</strong>
+                        <p>Рейтинги, отзывы и верификация профилей помогают выбирать надёжных партнёров и избегать мошенников.</p>
+                    </div>
+                    <div class="advantage-item">
+                        <strong>💡 Сообщество, а не биржа</strong>
+                        <p>Мы делаем ставку на долгосрочные отношения и взаимопомощь, а не на разовые сделки. У нас можно задать вопрос, поделиться опытом, найти единомышленников.</p>
+                    </div>
+                    <div class="advantage-item">
+                        <strong>💰 Бесплатный базовый доступ</strong>
+                        <p>Регистрация и базовый функционал (поиск партнёров, публикация запросов) — бесплатны. Мы планируем монетизацию только за дополнительные услуги (премиум-аккаунты, расширенная аналитика).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Чем мы отличаемся от других -->
+        <section class="difference-section">
+            <div class="container">
+                <h2 class="section-title">Чем мы отличаемся от других сервисов</h2>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h3>Не маркетплейс товаров</h3>
+                        <p>Мы не продаём товары и не конкурируем с Ozon, Amazon или AliExpress. Мы помогаем продавцам найти тех, кто знает, как успешно торговать на этих площадках.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>Не биржа фриланса</h3>
+                        <p>У нас нет разовых задач «сделать сайт» или «написать текст». Мы ориентированы на комплексную поддержку бизнеса и долгосрочное сотрудничество.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>Не государственный реестр</h3>
+                        <p>В отличие от платформы РЭЦ, мы открыты для любого бизнеса, а не только для крупных экспортёров. У нас проще и быстрее найти партнёра.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Призыв к действию -->
+        <section class="cta">
+            <div class="container cta-container">
+                <h2>Присоединяйтесь к сообществу</h2>
+                <p>Начните искать партнёра или предлагать свои услуги уже сегодня.</p>
+                <div class="cta-buttons">
+                    <a href="/register.html" class="btn btn-primary btn-large">Зарегистрироваться</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал (такой же, как на главной) -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-logo">Partners World</div>
+            <div class="footer-links">
+                <a href="/">Главная</a>
+                <a href="/about.html">О проекте</a>
+                <a href="/privacy.html">Конфиденциальность</a>
+                <a href="/terms.html">Условия</a>
+            </div>
+            <div class="footer-copyright">© 2026 Partners World. Все права защищены.</div>
+        </div>
+    </footer>
+    <script src="/js/app.js"></script>
+</body>
+</html>

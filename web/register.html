@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | Partners World</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo-block">
+                <img src="/images/logo.png" alt="Partners World" class="logo-img">
+            </a>
+            <nav class="nav-menu">
+                <a href="/requests.html" class="nav-link" id="requestsLink">Запросы</a>
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/about.html" class="nav-link">О проекте</a>
+                <a href="/profile.html" class="nav-link" id="profileLink" style="display: none;">Мой профиль</a>
+                <a href="/login.html" class="nav-link" id="loginLink">Вход</a>
+                <a href="/register.html" class="nav-link btn-register" id="registerLink">Регистрация</a>
+                <span class="user-info" id="userInfo" style="display: none;"></span>
+                <button class="logout-btn" id="logoutBtn" style="display: none;" onclick="logout()">Выйти</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Регистрация</h2>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль *</label>
+                <input type="password" id="password" required minlength="6" placeholder="Минимум 6 символов">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Роль *</label>
+                <select id="role" required>
+                    <option value="">Выберите роль</option>
+                    <option value="exporter">Экспортёр (ищу партнёра)</option>
+                    <option value="partner">Местный партнёр (помогаю продавать)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Страна *</label>
+                <input type="text" id="country" required placeholder="Например: RU, US, BR">
+            </div>
+
+            <div class="form-group">
+                <label for="company">Компания (необязательно)</label>
+                <input type="text" id="company" placeholder="Название компании">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание (необязательно)</label>
+                <textarea id="description" rows="3" placeholder="Расскажите о себе или своём бизнесе"></textarea>
+            </div>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <div id="result" class="result"></div>
+        <p class="link">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/register.js"></script>
+</body>
+</html>
