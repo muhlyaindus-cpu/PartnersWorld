@@ -17,15 +17,17 @@ func NewRepository(db *sql.DB) *Repository {
 func (r *Repository) Create(req *PartnershipRequest) (int64, error) {
 	query := `
         INSERT INTO partnership_requests (user_id, type, title, description, country, category, budget, status, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING id
     `
-	result, err := r.db.Exec(query,
+	var id int64
+	err := r.db.QueryRow(query,
 		req.UserID, req.Type, req.Title, req.Description, req.Country,
-		req.Category, req.Budget, req.Status)
+		req.Category, req.Budget, req.Status).Scan(&id)
 	if err != nil {
 		return 0, fmt.Errorf("insert request: %w", err)
 	}
-	return result.LastInsertId()
+	return id, nil
 }
 
 // List возвращает все открытые запросы с возможностью фильтрации по стране
@@ -40,7 +42,7 @@ func (r *Repository) List(countryFilter string) ([]PartnershipRequest, error) {
     `
 
 	if countryFilter != "" {
-		rows, err = r.db.Query(baseQuery+` AND country = ? ORDER BY created_at DESC`, countryFilter)
+		rows, err = r.db.Query(baseQuery+` AND country = $1 ORDER BY created_at DESC`, countryFilter)
 	} else {
 		rows, err = r.db.Query(baseQuery + ` ORDER BY created_at DESC`)
 	}
@@ -69,7 +71,7 @@ func (r *Repository) GetByID(id int64) (*PartnershipRequest, error) {
 	var req PartnershipRequest
 	err := r.db.QueryRow(`
         SELECT id, user_id, type, title, description, country, category, budget, status, created_at, updated_at
-        FROM partnership_requests WHERE id = ?
+        FROM partnership_requests WHERE id = $1
     `, id).Scan(
 		&req.ID, &req.UserID, &req.Type, &req.Title, &req.Description, &req.Country,
 		&req.Category, &req.Budget, &req.Status, &req.CreatedAt, &req.UpdatedAt,
@@ -86,8 +88,8 @@ func (r *Repository) GetByID(id int64) (*PartnershipRequest, error) {
 // CloseRequest закрывает запрос (меняет статус на closed)
 func (r *Repository) CloseRequest(id int64) error {
 	_, err := r.db.Exec(`
-		UPDATE partnership_requests SET status = 'closed', updated_at = datetime('now')
-		WHERE id = ?
+		UPDATE partnership_requests SET status = 'closed', updated_at = CURRENT_TIMESTAMP
+		WHERE id = $1
 	`, id)
 	if err != nil {
 		return fmt.Errorf("close request: %w", err)
@@ -100,7 +102,7 @@ func (r *Repository) CloseRequest(id int64) error {
 func (r *Repository) CreateOrUpdateResponse(requestID, responderUserID int64, message string, terms *string) (id int64, created bool, err error) {
 	var existingID int64
 	err = r.db.QueryRow(
-		`SELECT id FROM partnership_responses WHERE request_id = ? AND responder_user_id = ?`,
+		`SELECT id FROM partnership_responses WHERE request_id = $1 AND responder_user_id = $2`,
 		requestID,
 		responderUserID,
 	).Scan(&existingID)
@@ -109,34 +111,26 @@ func (r *Repository) CreateOrUpdateResponse(requestID, responderUserID int64, me
 	}
 
 	if err == sql.ErrNoRows {
-		res, execErr := r.db.Exec(
+		var newID int64
+		scanErr := r.db.QueryRow(
 			`INSERT INTO partnership_responses (request_id, responder_user_id, message, terms, created_at, updated_at)
-			 VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))`,
+			 VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+			 RETURNING id`,
 			requestID,
 			responderUserID,
 			message,
 			terms,
-		)
-		if execErr != nil {
-			return 0, false, fmt.Errorf("insert response: %w", execErr)
-		}
-		newID, _ := res.LastInsertId()
-		if newID == 0 {
-			// Фоллбек — на всякий случай.
-			if scanErr := r.db.QueryRow(
-				`SELECT id FROM partnership_responses WHERE request_id = ? AND responder_user_id = ?`,
-				requestID, responderUserID,
-			).Scan(&newID); scanErr != nil {
-				return 0, false, fmt.Errorf("fetch inserted response id: %w", scanErr)
-			}
+		).Scan(&newID)
+		if scanErr != nil {
+			return 0, false, fmt.Errorf("insert response: %w", scanErr)
 		}
 		return newID, true, nil
 	}
 
 	_, execErr := r.db.Exec(
 		`UPDATE partnership_responses
-		 SET message = ?, terms = ?, updated_at = datetime('now')
-		 WHERE id = ?`,
+		 SET message = $1, terms = $2, updated_at = CURRENT_TIMESTAMP
+		 WHERE id = $3`,
 		message,
 		terms,
 		existingID,
@@ -153,14 +147,14 @@ func (r *Repository) ListResponsesByRequest(requestID int64, responderUserID *in
 	base := `
 		SELECT id, request_id, responder_user_id, message, terms, created_at, updated_at
 		FROM partnership_responses
-		WHERE request_id = ?
+		WHERE request_id = $1
 	`
 	var (
 		rows *sql.Rows
 		err  error
 	)
 	if responderUserID != nil {
-		rows, err = r.db.Query(base+` AND responder_user_id = ? ORDER BY created_at DESC`, requestID, *responderUserID)
+		rows, err = r.db.Query(base+` AND responder_user_id = $2 ORDER BY created_at DESC`, requestID, *responderUserID)
 	} else {
 		rows, err = r.db.Query(base+` ORDER BY created_at DESC`, requestID)
 	}

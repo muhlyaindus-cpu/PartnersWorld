@@ -37,12 +37,12 @@ type CreateRequestRequest struct {
 // PartnershipResponse представляет отклик партнёра на запрос.
 type PartnershipResponse struct {
 	ID              int64     `json:"id" db:"id"`
-	RequestID        int64     `json:"request_id" db:"request_id"`
-	ResponderUserID  int64     `json:"responder_user_id" db:"responder_user_id"`
-	Message          string    `json:"message" db:"message"`
-	Terms            *string   `json:"terms,omitempty" db:"terms"` // произвольные условия (текст/JSON)
-	CreatedAt        time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt        time.Time `json:"updated_at" db:"updated_at"`
+	RequestID       int64     `json:"request_id" db:"request_id"`
+	ResponderUserID int64     `json:"responder_user_id" db:"responder_user_id"`
+	Message         string    `json:"message" db:"message"`
+	Terms           *string   `json:"terms,omitempty" db:"terms"` // произвольные условия (текст/JSON)
+	CreatedAt       time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at" db:"updated_at"`
 }
 
 // RespondToRequestRequest — тело запроса отклика.

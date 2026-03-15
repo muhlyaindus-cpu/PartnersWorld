@@ -129,3 +129,13 @@ func (r *Repository) UpdateUser(userID int64, updates map[string]interface{}) er
 	}
 	return nil
 }
+
+// GetUserCount возвращает общее количество пользователей в системе.
+func (r *Repository) GetUserCount() (int64, error) {
+	var count int64
+	err := r.db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
+	if err != nil {
+		return 0, fmt.Errorf("failed to get user count: %w", err)
+	}
+	return count, nil
+}

@@ -290,8 +290,7 @@ func (h *Handler) GetUserCount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var count int64
-	err := h.repo.db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
+	count, err := h.repo.GetUserCount()
 	if err != nil {
 		log.Printf("Error getting user count: %v", err)
 		httpx.WriteError(w, http.StatusInternalServerError, "Failed to get user count")
