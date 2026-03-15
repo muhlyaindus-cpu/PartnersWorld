@@ -74,6 +74,7 @@ PostgreSQL будет доступен на порту 5432, pgAdmin — на 50
 Проект распространяется под лицензией MIT. Подробнее — в файле LICENSE.
 
 📬 Контакты
+
 Автор: Nikolay Bykovskiy
 
 Почта: muhlyaindus@gmail.com
