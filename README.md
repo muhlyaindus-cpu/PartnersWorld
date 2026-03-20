@@ -75,7 +75,7 @@ PostgreSQL будет доступен на порту 5432, pgAdmin — на 50
 
 📬 Контакты
 
-Автор: Nikolay Bykovskiy
+Автор: Nikolay Bikovskiy
 
 Почта: muhlyaindus@gmail.com
 
